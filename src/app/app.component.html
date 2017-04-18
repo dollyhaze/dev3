@@ -13,12 +13,12 @@
 
   <sebm-google-map-marker
   *ngFor="let parking of parkings"
-  [latitude]="convertToNumber(parking.longitude)"
+  [latitude]="convertToNumber(parking.latitude)"
   iconUrl="assets/img/marker-images/1f17f.png"
-  [longitude]="convertToNumber(parking.latitude)"
+  [longitude]="convertToNumber(parking.longitude)"
   >
   <sebm-google-map-info-window [disableAutoPan]="true">
-     {{parking.title}}<br>
+     {{parking.name}}<br>
      <button (click)=showEvent()>meer info...</button>
    </sebm-google-map-info-window>
   </sebm-google-map-marker>
