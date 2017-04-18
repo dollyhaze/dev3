@@ -3,7 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { SidebarModule } from 'ng-sidebar';
 import { NgModule, ApplicationRef } from '@angular/core';
 import { AgmCoreModule } from 'angular2-google-maps/core';
-import {HttpModule, JsonpModule} from '@angular/http'
+import {HttpModule, JsonpModule} from '@angular/http';
+import {BootstrapModalModule} from 'ng2-bootstrap-modal';
+import {EventModalComponent} from './eventModal/eventModal.component';
 @NgModule({
   imports: [
     HttpModule,
@@ -11,8 +13,12 @@ import {HttpModule, JsonpModule} from '@angular/http'
     BrowserModule,
     SidebarModule.forRoot(),
     AgmCoreModule.forRoot({apiKey: 'AIzaSyCY6otWv1cmM1xjbHFRFd03pWOCbwT-SFk '}),
+    BootstrapModalModule.forRoot({container:document.body})
   ],
-  declarations: [ AppComponent ],
+  entryComponents: [
+    EventModalComponent
+  ],
+  declarations: [ AppComponent, EventModalComponent ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {}

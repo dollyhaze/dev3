@@ -5,6 +5,10 @@ import { NgModule, ApplicationRef } from '@angular/core';
 import { SebmGoogleMap, SebmGoogleMapMarker, SebmGoogleMapInfoWindow } from 'angular2-google-maps/core';
 import 'rxjs/Rx';
 import {Http} from '@angular/http';
+import {EventService} from './events.service';
+import {EventModalComponent} from './eventModal/eventModal.component';
+import { DialogService } from "ng2-bootstrap-modal";
+
 var height = window.innerHeight;
 @Component({
   selector: 'app',
@@ -13,22 +17,8 @@ var height = window.innerHeight;
 			height: ${height}px;
 		}
 	` ],
-  template: `
-    <sebm-google-map [zoom]="zoomlvl" [latitude]="lat" [styles]="mapstyle" [longitude]="lng">
-      <sebm-google-map-marker
-      *ngFor="let event of events"
-      iconUrl="assets/img/marker-images/image.png"
-      [latitude]="convertToNumber(event.latitude)"
-      [longitude]="convertToNumber(event.longitude)"
-      [label]="'P'"
-      >
-      <sebm-google-map-info-window [disableAutoPan]="true">
-         {{event.title}}<br>
-         <b>meer info...</b>
-       </sebm-google-map-info-window>
-      </sebm-google-map-marker>
-    </sebm-google-map>
-	`
+  providers:[EventService],
+  templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
   lat: number = 51.924420;
@@ -38,21 +28,37 @@ export class AppComponent implements OnInit {
   markerlng: number = 5.517733;
   opened: boolean = false;
   events = [];
-  constructor(private http: Http) {}
+  parkings = [];
+  constructor(private eventService: EventService, private dialogService:DialogService) {}
 
   ngOnInit() {
     this.getEvents()
+    this.getParkings()
   }
   private convertToNumber(value: string): number {
     return +value
   }
   getEvents() {
-    this.http.get('http://localhost:4000/events')
-      .map(res => res.json())
-      .subscribe(event => {
-        this.events = event.events
-      }, console.log)
+    this.eventService.getEvents()
+      .subscribe(
+        event => this.events = event.events,
+        console.log
+      )
   }
+  getParkings() {
+    this.eventService.getParkings()
+      .subscribe(
+        parking => {
+          this.parkings = parking.parkings
+        },
+        console.log
+      )
+  }
+
+  showEvent(event) {
+    this.dialogService.addDialog(EventModalComponent, event)
+  }
+
   directives: [SebmGoogleMap, SebmGoogleMapMarker, SebmGoogleMapInfoWindow];
   mapstyle = [{
     "stylers": [{
