@@ -4,10 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ApplicationRef } from '@angular/core';
 import { SebmGoogleMap, SebmGoogleMapMarker, SebmGoogleMapInfoWindow } from 'angular2-google-maps/core';
 import 'rxjs/Rx';
-import {Http} from '@angular/http';
-import {EventService} from './events.service';
-import {EventModalComponent} from './eventModal/eventModal.component';
-import { ConfirmComponent } from './confirmComponent/confirm.component';
+import { Http } from '@angular/http';
+import { EventService } from './events.service';
+import { EventModalComponent } from './eventModal/eventModal.component';
 import { DialogService } from "ng2-bootstrap-modal";
 
 var height = window.innerHeight;
