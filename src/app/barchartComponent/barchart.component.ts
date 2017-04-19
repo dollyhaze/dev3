@@ -20,7 +20,7 @@ export class BarChartComponent extends DialogComponent<BarChartModal, boolean> i
   public barChartType:string = 'bar';
   public barChartLegend:boolean = true;
   public barChartData:any[] = [
-    {data: [], label: "Events"},
+    {data: [], label: "Events"}
   ];
 
   public ngOnInit() {

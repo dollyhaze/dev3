@@ -22,7 +22,7 @@ export class EventModalComponent extends DialogComponent<EventModal, boolean> im
   chartData: Array<number>;
   closestParkings: number;
   farthestPrakings: number;
-  public doughnutChartLabels:string[] = ['Parkeeplaatsen in loopafstand', 'Parkeerplaatsen buiten loopafstand'];
+  public doughnutChartLabels:string[] = ['Parkeer garages in loopafstand', 'Parkeer garages buiten loopafstand'];
   public doughnutChartData:number[] = [350, 450, 100];
   public doughnutChartType:string = 'doughnut';
   public chartClicked(e:any):void {
