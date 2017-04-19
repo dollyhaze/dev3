@@ -56,13 +56,21 @@ export class AppComponent implements OnInit {
   }
 
   showEvent(event) {
+    let {mostClosestPraking, closestParkings, farthestPrakings} = this.getClosestParking(event, this.parkings);
+    event.mostClosestPraking = mostClosestPraking.length;
+    event.chartData = [closestParkings.length, farthestPrakings.length]
+    event.closestParkings = closestParkings.length;
+    event.farthestPrakings = farthestPrakings.length;
     this.dialogService.addDialog(EventModalComponent, event)
   }
 
   getClosestParking(event, parkings) {
     var minD = Number.MAX_SAFE_INTEGER;
     var closestD;
-    var closestParking;
+    var mostClosestPraking;
+    let closestParkings = []
+    let farthestPrakings = []
+    let walkingDistance = 0.8; // in km
     for (let parking of parkings) {
       var p = Math.PI / 180
       var c = Math.cos;
@@ -71,18 +79,21 @@ export class AppComponent implements OnInit {
               (1 - c((parking.longitude - event.longitude) * p))/2;
 
       var d = 12742 * Math.asin(Math.sqrt(a));
-
       if(d < minD){
         closestD = d;
-        closestParking = parking;
+        mostClosestPraking = parking;
         minD = d;
       }
+
+      if(d <= walkingDistance) {
+        closestParkings.push(parking);
+      } else {
+        farthestPrakings.push(parking);
+      }
+
     }
 
-    console.log(closestD);
-    console.log(closestParking.name);
-    return closestParking.name;
-
+    return {mostClosestPraking, closestParkings, farthestPrakings};
     function deg2rad(deg) {
       return deg * (Math.PI/180)
     }

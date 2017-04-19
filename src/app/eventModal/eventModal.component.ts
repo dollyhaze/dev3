@@ -5,6 +5,10 @@ export interface EventModal {
   venue_name:string;
   title:string;
   description: string;
+  mostClosestParking: number;
+  closestParkings: number;
+  chartData: Array<number>;
+  farthestPrakings: number;
 }
 @Component({
     selector: 'confirm',
@@ -14,6 +18,20 @@ export class EventModalComponent extends DialogComponent<EventModal, boolean> im
   venue_name: string;
   title: string;
   description: string;
+  mostClosestParking: number;
+  chartData: Array<number>;
+  closestParkings: number;
+  farthestPrakings: number;
+  public doughnutChartLabels:string[] = ['Parkeeplaatsen in loopafstand', 'Parkeerplaatsen buiten loopafstand'];
+  public doughnutChartData:number[] = [350, 450, 100];
+  public doughnutChartType:string = 'doughnut';
+  public chartClicked(e:any):void {
+    console.log(this.closestParkings);
+  }
+
+  public chartHovered(e:any):void {
+    console.log(e);
+  }
   constructor(dialogService: DialogService) {
     super(dialogService);
   }
