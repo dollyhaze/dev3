@@ -8,6 +8,7 @@
   <sebm-google-map-info-window [disableAutoPan]="true">
      {{event.title}}<br>
      <button (click)=showEvent(event)>meer info...</button>
+     <button (click)="getClosestParking(event, parkings)">getDistance...</button>
    </sebm-google-map-info-window>
   </sebm-google-map-marker>
 

@@ -7,6 +7,7 @@ import 'rxjs/Rx';
 import {Http} from '@angular/http';
 import {EventService} from './events.service';
 import {EventModalComponent} from './eventModal/eventModal.component';
+import { ConfirmComponent } from './confirmComponent/confirm.component';
 import { DialogService } from "ng2-bootstrap-modal";
 
 var height = window.innerHeight;
@@ -59,6 +60,35 @@ export class AppComponent implements OnInit {
     this.dialogService.addDialog(EventModalComponent, event)
   }
 
+  getClosestParking(event, parkings) {
+    var minD = Number.MAX_SAFE_INTEGER;
+    var closestD;
+    var closestParking;
+    for (let parking of parkings) {
+      var p = Math.PI / 180
+      var c = Math.cos;
+      var a = 0.5 - c((parking.latitude - event.latitude) * p)/2 +
+              c(event.latitude * p) * c(parking.latitude * p) *
+              (1 - c((parking.longitude - event.longitude) * p))/2;
+
+      var d = 12742 * Math.asin(Math.sqrt(a));
+
+      if(d < minD){
+        closestD = d;
+        closestParking = parking;
+        minD = d;
+      }
+    }
+
+    console.log(closestD);
+    console.log(closestParking.name);
+    return closestParking.name;
+
+    function deg2rad(deg) {
+      return deg * (Math.PI/180)
+    }
+  }
+
   directives: [SebmGoogleMap, SebmGoogleMapMarker, SebmGoogleMapInfoWindow];
   mapstyle = [{
     "stylers": [{
@@ -80,3 +110,24 @@ export class AppComponent implements OnInit {
     }]
 }]
 }
+
+/*
+getDistance(event, parking) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(parking.latitude-event.latitude);  // deg2rad below
+  var dLon = deg2rad(parking.longitude-event.longitude);
+  var a =
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(event.longitude)) * Math.cos(deg2rad(parking.longitude)) *
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ;
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  var d = R * c; // Distance in km
+  return d;
+
+  function deg2rad(deg) {
+    return deg * (Math.PI/180)
+  }
+
+}
+*/

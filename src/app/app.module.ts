@@ -6,6 +6,7 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
 import {HttpModule, JsonpModule} from '@angular/http';
 import {BootstrapModalModule} from 'ng2-bootstrap-modal';
 import {EventModalComponent} from './eventModal/eventModal.component';
+import { ConfirmComponent } from './confirmComponent/confirm.component';
 @NgModule({
   imports: [
     HttpModule,
@@ -16,9 +17,10 @@ import {EventModalComponent} from './eventModal/eventModal.component';
     BootstrapModalModule.forRoot({container:document.body})
   ],
   entryComponents: [
-    EventModalComponent
+    EventModalComponent,
+    ConfirmComponent
   ],
-  declarations: [ AppComponent, EventModalComponent ],
+  declarations: [ AppComponent, EventModalComponent, ConfirmComponent ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {}
