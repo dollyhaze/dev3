@@ -5,7 +5,7 @@ export interface EventModal {
   venue_name:string;
   title:string;
   description: string;
-  mostClosestParking: number;
+  mostClosestParking: object;
   closestParkings: number;
   chartData: Array<number>;
   farthestPrakings: number;
@@ -18,7 +18,7 @@ export class EventModalComponent extends DialogComponent<EventModal, boolean> im
   venue_name: string;
   title: string;
   description: string;
-  mostClosestParking: number;
+  mostClosestParking: object;
   chartData: Array<number>;
   closestParkings: number;
   farthestPrakings: number;
@@ -27,6 +27,7 @@ export class EventModalComponent extends DialogComponent<EventModal, boolean> im
   public doughnutChartType:string = 'doughnut';
   public chartClicked(e:any):void {
     console.log(this.closestParkings);
+    console.log(this.mostClosestParking);
   }
 
   public chartHovered(e:any):void {

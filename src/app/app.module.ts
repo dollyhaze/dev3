@@ -5,6 +5,7 @@ import { NgModule, ApplicationRef } from '@angular/core';
 import { AgmCoreModule } from 'angular2-google-maps/core';
 import {HttpModule, JsonpModule} from '@angular/http';
 import {BootstrapModalModule} from 'ng2-bootstrap-modal';
+import {BarChartComponent} from "./barchartComponent/barchart.component"
 import {EventModalComponent} from './eventModal/eventModal.component';
 import { ConfirmComponent } from './confirmComponent/confirm.component';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
@@ -21,9 +22,10 @@ import './graphs/Chart.min.js';
   ],
   entryComponents: [
     EventModalComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    BarChartComponent
   ],
-  declarations: [ AppComponent, EventModalComponent, ConfirmComponent ],
+  declarations: [ AppComponent, EventModalComponent, ConfirmComponent, BarChartComponent ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {}

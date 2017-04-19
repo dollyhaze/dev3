@@ -4,12 +4,15 @@
          <button type="button" class="close" (click)="close()" >&times;</button>
          <h4 class="modal-title">{{title || 'Confirm'}}</h4>
        </div>
-       <div class="modal-body" >
-         <div [innerHTML]="description"></div>
-         <b>Parkeer garages in de buurt:</b>
+       <div class="modal-body" style="overflow-y: scroll; height:500px">
+         <b>Descriptie:</b>
          <br>
-         {{parkings}}
-
+         <br>
+         <div [innerHTML]="description"></div>
+         <b>Dichtsbijzijnde parkeer garage:</b> {{mostClosestParking.name}}
+         <br>
+         <br>
+         <b>Parkeer garages in de buurt:</b>
          <canvas baseChart
               [data]="chartData"
               [labels]="doughnutChartLabels"

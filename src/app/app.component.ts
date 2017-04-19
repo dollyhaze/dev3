@@ -8,6 +8,7 @@ import { Http } from '@angular/http';
 import { EventService } from './events.service';
 import { EventModalComponent } from './eventModal/eventModal.component';
 import { DialogService } from "ng2-bootstrap-modal";
+import { BarChartComponent} from "./barchartComponent/barchart.component"
 
 var height = window.innerHeight;
 @Component({
@@ -56,20 +57,57 @@ export class AppComponent implements OnInit {
   }
 
   showEvent(event) {
-    let {mostClosestPraking, closestParkings, farthestPrakings} = this.getClosestParking(event, this.parkings);
-    event.mostClosestPraking = mostClosestPraking.length;
-    event.chartData = [closestParkings.length, farthestPrakings.length]
+    let {mostClosestParking, closestParkings, farthestParkings} = this.getClosestParking(event, this.parkings);
+    event.mostClosestParking = mostClosestParking;
+    event.chartData = [closestParkings.length, farthestParkings.length]
     event.closestParkings = closestParkings.length;
-    event.farthestPrakings = farthestPrakings.length;
+    event.farthestParkings = farthestParkings.length;
     this.dialogService.addDialog(EventModalComponent, event)
+  }
+
+  getEventDate(events){
+    var monthArray = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
+    var eventDateArray = [];
+    let usedMonths = [];
+    var eventsPerMonthArray = [];
+    for(let event of events){
+      let d = new Date(event.start_time);
+      let m = d.getMonth()
+      eventDateArray.push(m);
+    }
+
+    let dates = eventDateArray.reduce((acc, curr) => {
+      if(typeof acc[curr] === 'undefined') {
+        acc[curr] = 1
+      } else {
+        acc[curr] +=1;
+      }
+      return acc;
+    }, {})
+
+    usedMonths = Object.keys(dates)
+      .map(key => {
+        let idx = +key - 1;
+        if(monthArray[idx]) return monthArray[idx]
+      })
+
+    dates = Object.keys(dates)
+      .map(key => {
+        return dates[key]
+      })
+      // consol
+    this.dialogService.addDialog(BarChartComponent, {
+      data: dates,
+      usedMonths
+    })
   }
 
   getClosestParking(event, parkings) {
     var minD = Number.MAX_SAFE_INTEGER;
     var closestD;
-    var mostClosestPraking;
+    var mostClosestParking;
     let closestParkings = []
-    let farthestPrakings = []
+    let farthestParkings = []
     let walkingDistance = 0.8; // in km
     for (let parking of parkings) {
       var p = Math.PI / 180
@@ -81,19 +119,21 @@ export class AppComponent implements OnInit {
       var d = 12742 * Math.asin(Math.sqrt(a));
       if(d < minD){
         closestD = d;
-        mostClosestPraking = parking;
+        mostClosestParking = parking;
+        console.log(mostClosestParking.name);
         minD = d;
       }
 
       if(d <= walkingDistance) {
         closestParkings.push(parking);
       } else {
-        farthestPrakings.push(parking);
+        farthestParkings.push(parking);
       }
 
     }
+    console.log(mostClosestParking.name);
+    return {mostClosestParking, closestParkings, farthestParkings};
 
-    return {mostClosestPraking, closestParkings, farthestPrakings};
     function deg2rad(deg) {
       return deg * (Math.PI/180)
     }

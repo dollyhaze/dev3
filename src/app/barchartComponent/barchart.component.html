@@ -1,0 +1,13 @@
+<div>
+  <div style="display: block">
+  <button (click)=getEventDate(events) style="position:absolute;top:0;left:200;z-index:9999;">Close</button>
+  <canvas baseChart
+          [datasets]="barChartData"
+          [labels]="usedMonths"
+          [options]="barChartOptions"
+          [legend]="barChartLegend"
+          [chartType]="barChartType"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)"></canvas>
+  </div>
+</div>

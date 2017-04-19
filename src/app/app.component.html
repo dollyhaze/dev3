@@ -1,26 +1,29 @@
-<sebm-google-map [zoom]="zoomlvl" [latitude]="lat" [styles]="mapstyle" [longitude]="lng">
-  <sebm-google-map-marker
-  *ngFor="let event of events"
-  iconUrl="assets/img/marker-images/image.png"
-  [latitude]="convertToNumber(event.latitude)"
-  [longitude]="convertToNumber(event.longitude)"
-  >
-  <sebm-google-map-info-window [disableAutoPan]="true">
-     {{event.title}}<br>
-     <button (click)=showEvent(event)>meer info...</button>
-     <button (click)="getClosestParking(event, parkings)">getDistance...</button>
-   </sebm-google-map-info-window>
-  </sebm-google-map-marker>
+<div>
+  <button (click)=getEventDate(events) style="position:absolute;top:0;left:0;z-index:9999;">Barchart</button>
+  <sebm-google-map [zoom]="zoomlvl" [latitude]="lat" [styles]="mapstyle" [longitude]="lng">
+    <sebm-google-map-marker
+    *ngFor="let event of events"
+    iconUrl="assets/img/marker-images/image.png"
+    [latitude]="convertToNumber(event.latitude)"
+    [longitude]="convertToNumber(event.longitude)"
+    >
+    <sebm-google-map-info-window [disableAutoPan]="true">
+       {{event.title}}<br>
+       <button (click)=showEvent(event)>meer info...</button>
+       <button (click)="getClosestParking(event, parkings)">getDistance...</button>
+     </sebm-google-map-info-window>
+    </sebm-google-map-marker>
 
-  <sebm-google-map-marker
-  *ngFor="let parking of parkings"
-  [latitude]="convertToNumber(parking.latitude)"
-  iconUrl="assets/img/marker-images/1f17f.png"
-  [longitude]="convertToNumber(parking.longitude)"
-  >
-  <sebm-google-map-info-window [disableAutoPan]="true">
-     {{parking.name}}<br>
-     <button (click)=showEvent()>meer info...</button>
-   </sebm-google-map-info-window>
-  </sebm-google-map-marker>
-</sebm-google-map>
+    <sebm-google-map-marker
+    *ngFor="let parking of parkings"
+    [latitude]="convertToNumber(parking.latitude)"
+    iconUrl="assets/img/marker-images/1f17f.png"
+    [longitude]="convertToNumber(parking.longitude)"
+    >
+    <sebm-google-map-info-window [disableAutoPan]="true">
+       {{parking.name}}<br>
+       <button (click)=showEvent()>meer info...</button>
+     </sebm-google-map-info-window>
+    </sebm-google-map-marker>
+  </sebm-google-map>
+</div>
